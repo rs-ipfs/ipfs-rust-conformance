@@ -1,10 +1,7 @@
 const { createFactory } = require('ipfsd-ctl')
 const tests = require('interface-ipfs-core')
 
-// TODO: isNode
-// const { isNode } = require('ipfs-utils/src/env')
-
-const isNode = true
+const isNode = (process && process.env)
 
 const options = {
   type: 'rust',
@@ -17,15 +14,14 @@ const options = {
 const factory = createFactory(options)
 
 // Phase 1.1
+tests.repo(factory)
 tests.pubsub(factory)
 tests.swarm(factory)
-tests.repo(factory)
 
 // Phase 1.2
 tests.dag(factory)
 tests.block(factory)
 tests.bitswap(factory)
-// TODO: Refs?
 
 // Phase 2 and beyond...
 // tests.object(factory)
@@ -39,5 +35,4 @@ tests.bitswap(factory)
 // tests.config(factory)
 // tests.stats(factory)
 // tests.miscellaneous(factory)
-// tests.filesRegular(factory)
-// tests.filesMFS(factory)
+// tests.files(factory)
