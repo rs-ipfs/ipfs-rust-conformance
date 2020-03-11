@@ -10,12 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "aegir": "^21.3.0",
-    "interface-ipfs-core": "^0.132.0",
+    "interface-ipfs-core": "^0.132.1-rc.74",
     "ipfsd-ctl": "../js-ipfsd-ctl",
     "mocha": "^7.1.0"
   },
   "devDependencies": {
     "go-ipfs-dep": "^0.4.23",
+    "rust-ipfs-dep": "github:ipfs-rust/npm-rust-ipfs-dep#rust-dep",
     "ipfs": "^0.41.2",
     "ipfs-http-client": "^42.0.0"
   }

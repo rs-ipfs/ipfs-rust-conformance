@@ -5,7 +5,7 @@ const isNode = (process && process.env)
 
 const options = {
   type: 'rust',
-  ipfsBin: isNode ? process.env.IPFS_RUST_EXEC : undefined,
+  ipfsBin: isNode ? require('rust-ipfs-dep').path() : undefined,
   test: true,
   disposable: true,
   ipfsHttpModule: require('ipfs-http-client')
