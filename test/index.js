@@ -1,11 +1,16 @@
 const { createFactory } = require('ipfsd-ctl')
 const tests = require('interface-ipfs-core')
+const isDev = process.env.IPFS_RUST_EXEC
 
 const isNode = (process && process.env)
 
+const ipfsBin = isNode ?
+  process.env.IPFS_RUST_EXEC ? process.env.IPFS_RUST_EXEC : require('rust-ipfs-dep').path()
+    : undefined
+
 const options = {
   type: 'rust',
-  ipfsBin: isNode ? require('rust-ipfs-dep').path() : undefined,
+  ipfsBin,
   test: true,
   disposable: true,
   ipfsHttpModule: require('ipfs-http-client')
