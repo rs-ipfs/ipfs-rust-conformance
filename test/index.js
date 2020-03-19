@@ -13,7 +13,12 @@ const options = {
   ipfsBin,
   test: true,
   disposable: true,
-  ipfsHttpModule: require('ipfs-http-client')
+  ipfsHttpModule: require('ipfs-http-client'),
+  ipfsOptions: {
+    init: {
+      bits: 2048
+    }
+  }
 }
 
 const factory = createFactory(options)
@@ -24,9 +29,9 @@ tests.pubsub(factory)
 tests.swarm(factory)
 
 // Phase 1.2
-tests.dag(factory)
-tests.block(factory)
-tests.bitswap(factory)
+// tests.dag(factory)
+// tests.block(factory)
+// tests.bitswap(factory)
 
 // Phase 2 and beyond...
 // tests.object(factory)
