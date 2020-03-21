@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "go-ipfs-dep": "^0.4.23",
-    "rust-ipfs-dep": "github:ipfs-rust/npm-rust-ipfs-dep#rust-dep",
+    "rust-ipfs-dep": "github:ipfs-rust/npm-rust-ipfs-dep#master",
     "ipfs": "^0.41.2",
     "ipfs-http-client": "^42.0.0"
   }
