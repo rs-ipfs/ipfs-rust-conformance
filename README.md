@@ -17,11 +17,14 @@ $ git clone https://github.com/ipfs-rust/ipfs-rust-conformance
 $ npm test
 ```
 
-For development, you can symlink http to your rust-ipfs executable, and then run `rust.sh`
+For development, you can symlink http to your rust-ipfs-http executable, and
+then use the `rust.sh` as IPFS_RUST_EXEC to run tests and capture all output
+from the binary.
 
 ```bash
-$ ln -s /path/to/rust-ipfs/executable ./http
-$ ./rust.sh
+$ ln -s /path/to/rust-ipfs/target/ipfs-http ./http
+$ IPFS_RUST_EXEC=$(pwd)/rust.sh npm test
+$ cat /tmp/rust.log
 ```
 
 # Contributing
