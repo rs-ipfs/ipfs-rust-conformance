@@ -24,7 +24,6 @@ const options = {
 const factory = createFactory(options)
 
 // Phase 1.1
-tests.repo(factory)
 tests.pubsub(factory)
 tests.swarm(factory)
 
@@ -34,6 +33,7 @@ tests.swarm(factory)
 // tests.bitswap(factory)
 
 // Phase 2 and beyond...
+// tests.repo(factory)
 // tests.object(factory)
 // tests.pin(factory)
 // tests.bootstrap(factory)
