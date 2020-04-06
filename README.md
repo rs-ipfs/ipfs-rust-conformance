@@ -36,12 +36,6 @@ issues. Note that in addition to test timeouts the http client also has a
 timeout, which can keep the `npm test` alive for less than ten seconds after
 the summary has been printed.
 
-There is [`why-is-node-running`] which is a tool which can dump all the reasons
-for node process staying alive. These outputs haven't really been that useful
-in the real debugging though. Some stacktraces are missing and it can take a
-while to understand what the stacktraces represent and once you do understand,
-the understanding will not help you make progress.
-
 What has worked previously is:
 
  1. disable tests until you find the one which causes the hang
