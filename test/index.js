@@ -26,11 +26,13 @@ const factory = createFactory(options)
 // Phase 1.1
 tests.pubsub(factory)
 tests.swarm(factory)
+tests.miscellaneous(factory, { skip: ['dns', 'resolve'] })
 
 // Phase 1.2
-// tests.dag(factory)
-// tests.block(factory)
-// tests.bitswap(factory)
+tests.root(factory, { skip: ['add', 'get', 'cat', 'ls'] })
+tests.dag(factory, { skip: ['tree'] })
+tests.block(factory)
+tests.bitswap(factory)
 
 // Phase 2 and beyond...
 // tests.repo(factory)
