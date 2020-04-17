@@ -23,16 +23,31 @@ const options = {
 
 const factory = createFactory(options)
 
+// Phase 1.0-ish
+tests.miscellaneous(factory, { skip: ['dns', 'resolve'] })
+
 // Phase 1.1
+
+// these are a bit flaky
 tests.pubsub(factory)
+// these are rarely flaky
 tests.swarm(factory)
 tests.miscellaneous(factory, { skip: ['dns', 'resolve'] })
 
 // Phase 1.2
-tests.root(factory, { skip: ['add', 'get', 'cat', 'ls'] })
-tests.dag(factory, { skip: ['tree'] })
+
+// this is ignored because the js ipfs-http-client doesn't expose the
+// localResolve parameter, and the later versions no longer send Content-Length
+// header, which our implementation requires.
+tests.dag.get(factory, { skip: ['should get only a CID, due to resolving locally only'] })
+tests.dag.put(factory)
+
 tests.block(factory)
+
+// these are a bit flaky
 tests.bitswap(factory)
+tests.root.refs(factory);
+tests.root.refsLocal(factory);
 
 // Phase 2 and beyond...
 // tests.repo(factory)
