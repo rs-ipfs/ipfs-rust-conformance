@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aegir": "^21.3.0",
-    "interface-ipfs-core": "^0.132.1-rc.74",
+    "interface-ipfs-core": "github:ipfs-rust/js-ipfs#rust_ipfs_grant1",
     "ipfsd-ctl": "github:ipfs-rust/js-ipfsd-ctl#add_rust_ipfs_http",
     "mocha": "^7.1.0"
   },
