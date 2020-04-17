@@ -42,7 +42,7 @@ tests.miscellaneous(factory, { skip: ['dns', 'resolve'] })
 tests.dag.get(factory, { skip: ['should get only a CID, due to resolving locally only'] })
 tests.dag.put(factory)
 
-tests.block(factory)
+tests.block(factory, { skip: ['should error when removing pinned blocks'] })
 
 // these are a bit flaky
 tests.bitswap(factory)
