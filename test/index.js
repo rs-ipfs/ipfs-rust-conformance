@@ -32,7 +32,6 @@ tests.miscellaneous(factory, { skip: ['dns', 'resolve'] })
 tests.pubsub(factory)
 // these are rarely flaky
 tests.swarm(factory)
-tests.miscellaneous(factory, { skip: ['dns', 'resolve'] })
 
 // Phase 1.2
 
