@@ -41,7 +41,7 @@ tests.swarm(factory)
 tests.dag.get(factory, { skip: ['should get only a CID, due to resolving locally only'] })
 tests.dag.put(factory)
 
-tests.block(factory, { skip: ['should error when removing pinned blocks'] })
+tests.block(factory)
 
 // these are a bit flaky
 tests.bitswap(factory)
@@ -58,10 +58,12 @@ tests.root.refs(factory, {
 });
 tests.root.refsLocal(factory, { skip: ['should get local refs'] });
 
-// Phase 2 and beyond...
+// Phase 2
+tests.pin(factory)
+
+// Phase  and beyond...
 // tests.repo(factory)
 // tests.object(factory)
-// tests.pin(factory)
 // tests.bootstrap(factory)
 // tests.dht(factory)
 // tests.name(factory)
