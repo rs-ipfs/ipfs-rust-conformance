@@ -5,10 +5,17 @@ This repository contains the scripts used to run interface conformance testing f
 
 # Install
 
-To install the script and ready it for use, clone this repo:
+To clone the repository and ready it for use, first clone this repo:
 
 ```bash
-$ git clone https://github.com/ipfs-rust/ipfs-rust-conformance
+$ git clone https://github.com/rs-ipfs/ipfs-rust-conformance
+```
+
+After cloning, use `setup.sh` to do `npm install` and patch any of the dependencies:
+
+```bash
+$ cd ipfs-rust-conformance
+$ ./setup.sh
 ```
 
 # Usage
@@ -26,6 +33,37 @@ $ ln -s /path/to/rust-ipfs/target/ipfs-http ./http
 $ IPFS_RUST_EXEC=$(pwd)/rust.sh npm test
 $ cat /tmp/rust.log
 ```
+
+# Patch management
+
+We currently staying behind at `interface-ipfs-core@0.134.3` and the fixes we have upstreamed are also kept under `patches/`.
+
+To create a new patch:
+
+1. Fork https://github.com/ipfs/js-ipfs/
+2. Clone locally
+3. Checkout a new branch based on the tag for the `interface-ipfs-core` version
+   we are currently depending on (see package.json)
+4. Apply all of our patches from `patches/` with `git apply $ipfs_rust_conformance/patches/*`
+5. Fix any new tests
+6. When done, cherry pick your commits to a new branch based off the latest
+   main js-ipfs branch
+7. Submit PR
+8. Squash your work, refer to your PR in the message
+9. Remove existing `patches/`
+9. Recreate the `patches/` with `git format-patch -o
+   $ipfs-rust-conformance/patches $the_tag_you_based_your_work`
+
+Where above:
+
+ - `$ipfs_rust_conformance` points to your checkout of this repository
+ - `$the_tag_you_based_your_work` is the tag you started working on js-ipfs
+   working copy
+
+Previously this has been done by first working on a patch and then backporting
+it, which might be easier. Luckily the tests are low traffic. If you need help
+wrestling with git, don't hesitate to ask for guidance; this is simpler than
+it's step by step explanation looks like.
 
 # Troubleshooting hangs
 
