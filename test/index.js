@@ -45,18 +45,8 @@ tests.block(factory, { skip: ['should error when removing pinned blocks'] })
 
 // these are a bit flaky
 tests.bitswap(factory)
-tests.root.refs(factory, {
-  skip: [
-    'should print refs for multiple paths',
-    'should follow a path with max depth 2, <hash>/<subdir>',
-    'should get refs with max depth of 3',
-    'should get refs with max depth of 2',
-    'should get refs with recursive and unique option',
-    'should recursively follows folders, -r',
-    'should follow a path with recursion, <hash>/<subdir>'
-  ]
-});
-tests.root.refsLocal(factory, { skip: ['should get local refs'] });
+tests.root.refs(factory);
+tests.root.refsLocal(factory);
 
 // Phase 2 and beyond...
 
