@@ -61,6 +61,7 @@ tests.root.refsLocal(factory, { skip: ['should get local refs'] });
 // Phase 2 and beyond...
 
 tests.root.cat(factory);
+tests.root.get(factory);
 
 // tests.repo(factory)
 // tests.object(factory)
