@@ -3,7 +3,8 @@
 set -eu
 set -o pipefail
 
-npm install
+# production will skip the dev dependencies
+npm install --production
 
 if [ -d "patches" ]; then
     echo "Applying patches..."
