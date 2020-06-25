@@ -13,5 +13,5 @@ if [ -d "patches" ]; then
     # a/packages/interface-ipfs-core/src/refs.js to node_modules/interface-ipfs-core/src/refs.js
     #
     # applying these patches on js-ipfs checkout does not require any extra arguments.
-    git apply --verbose patches/* -p3 --directory node_modules/interface-ipfs-core/
+    git apply --verbose --ignore-whitespace patches/* -p3 --directory node_modules/interface-ipfs-core/
 fi
