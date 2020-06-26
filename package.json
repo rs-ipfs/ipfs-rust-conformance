@@ -12,11 +12,11 @@
     "aegir": "^21.3.0",
     "interface-ipfs-core": "0.134.3",
     "ipfsd-ctl": "github:ipfs-rust/js-ipfsd-ctl#add_rust_ipfs_http",
-    "mocha": "^7.1.0"
+    "mocha": "^7.1.0",
+    "ipfs-http-client": "^42.0.0"
   },
   "devDependencies": {
     "rust-ipfs-dep": "github:ipfs-rust/npm-rust-ipfs-dep#master",
-    "ipfs": "^0.43.0",
-    "ipfs-http-client": "^42.0.0"
+    "ipfs": "^0.43.0"
   }
 }
