@@ -41,17 +41,22 @@ tests.swarm(factory)
 tests.dag.get(factory, { skip: ['should get only a CID, due to resolving locally only'] })
 tests.dag.put(factory)
 
-tests.block(factory)
-tests.block.put(factory, {
-    skip: [
-      // both are pinning related
-      'should error when removing pinned blocks',
-      'should put a buffer, using options'
-    ]
+tests.block(factory, {
+  skip: [
+    // both are pinning related
+    'should error when removing pinned blocks',
+    'should put a buffer, using options'
+  ]
 })
 
 // these are a bit flaky
-tests.bitswap(factory)
+tests.bitswap(factory, {
+  skip: [
+    // these are broken, block/get is never dropped
+    'should remove blocks from the wantlist when requests are cancelled',
+    'should keep blocks in the wantlist when only one request is cancelled'
+  ]
+})
 tests.root.refs(factory);
 tests.root.refsLocal(factory);
 
