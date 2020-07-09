@@ -1,0 +1,43 @@
+From 638b0c4f1b013379a8c2d235a32e5d0ce6c103bb Mon Sep 17 00:00:00 2001
+From: Joonas Koivunen <joonas.koivunen@gmail.com>
+Date: Sat, 18 Apr 2020 15:15:41 +0300
+Subject: [PATCH] fix: allow either cidv{0,1} in refs-local test
+
+rationale: simplest way to support using cidv0 and cidv1 interchangeably
+in an ipfs implementation is to just convert all cids to cidv1
+transparently. this has the miniscule setback of `refs/local` not being able
+to list cids in their original version. this fix allows the
+implementation to use either version internally.
+---
+ packages/interface-ipfs-core/src/refs-local.js | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/packages/interface-ipfs-core/src/refs-local.js b/packages/interface-ipfs-core/src/refs-local.js
+index 78d004de..6628ba8b 100644
+--- a/packages/interface-ipfs-core/src/refs-local.js
++++ b/packages/interface-ipfs-core/src/refs-local.js
+@@ -48,12 +48,17 @@ module.exports = (common, options) => {
+ 
+       const imported = await all(importer(dirs, ipfs.block))
+ 
+-      // otherwise go-ipfs doesn't show them in the local refs
+-      await Promise.all(
+-        imported.map(i => ipfs.pin.add(i.cid))
+-      )
++      // rust-ipfs doesn't yet have pinning api, it'll just list all local cids
++      // in /refs/local
++      if (common.opts.type !== 'rust') {
++        // otherwise go-ipfs doesn't show them in the local refs
++        await Promise.all(
++          imported.map(i => ipfs.pin.add(i.cid))
++        )
++      }
+ 
+       const refs = await all(ipfs.refs.local())
++
+       const cids = refs.map(r => r.ref)
+ 
+       expect(
+-- 
+2.20.1
+
