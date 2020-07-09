@@ -1,4 +1,4 @@
-From d9d1b06c4bb970218b5281cb5eebd1ffd9d39514 Mon Sep 17 00:00:00 2001
+From 11a5791d75442d77704b6083c007b9432b68fe42 Mon Sep 17 00:00:00 2001
 From: Joonas Koivunen <joonas.koivunen@gmail.com>
 Date: Sat, 18 Apr 2020 15:15:41 +0300
 Subject: [PATCH] fix: allow either cidv{0,1} in refs-local test
@@ -9,14 +9,22 @@ transparently. this has the miniscule setback of `refs/local` not being able
 to list cids in their original version. this fix allows the
 implementation to use either version internally.
 ---
- packages/interface-ipfs-core/src/refs-local.js | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ .../interface-ipfs-core/src/refs-local.js     | 44 ++++++++++++++++---
+ 1 file changed, 38 insertions(+), 6 deletions(-)
 
 diff --git a/packages/interface-ipfs-core/src/refs-local.js b/packages/interface-ipfs-core/src/refs-local.js
-index d20851de..fc8482c2 100644
+index d20851de..33a94c74 100644
 --- a/packages/interface-ipfs-core/src/refs-local.js
 +++ b/packages/interface-ipfs-core/src/refs-local.js
-@@ -47,12 +47,17 @@ module.exports = (common, options) => {
+@@ -7,6 +7,7 @@ const all = require('it-all')
+ const importer = require('ipfs-unixfs-importer')
+ const drain = require('it-drain')
+ const testTimeout = require('./utils/test-timeout')
++const CID = require('cids')
+ 
+ /** @typedef { import("ipfsd-ctl/src/factory") } Factory */
+ /**
+@@ -47,15 +48,46 @@ module.exports = (common, options) => {
  
        const imported = await all(importer(dirs, ipfs.block))
  
@@ -35,9 +43,40 @@ index d20851de..fc8482c2 100644
  
        const refs = await all(ipfs.refs.local())
 +
++      const expected = [
++        'QmVwdDCY4SPGVFnNCiZnX5CtzwWDn6kAM98JXzKxE3kCmn',
++        'QmR4nFjTu18TyANgC65ArNWp5Yaab1gPzQ4D8zp7Kx3vhr'
++      ]
++
        const cids = refs.map(r => r.ref)
-       expect(cids).to.include('QmVwdDCY4SPGVFnNCiZnX5CtzwWDn6kAM98JXzKxE3kCmn')
-       expect(cids).to.include('QmR4nFjTu18TyANgC65ArNWp5Yaab1gPzQ4D8zp7Kx3vhr')
+-      expect(cids).to.include('QmVwdDCY4SPGVFnNCiZnX5CtzwWDn6kAM98JXzKxE3kCmn')
+-      expect(cids).to.include('QmR4nFjTu18TyANgC65ArNWp5Yaab1gPzQ4D8zp7Kx3vhr')
++
++      for (const alt of expected.map(alternatives)) {
++        // allow the cids to be either original or in later cid version.
++        let removed = false
++        for (const version of alt) {
++          const index = cids.indexOf(version)
++          if (index === -1) {
++            continue
++          }
++          removed = true
++          delete cids[index]
++          break
++        }
++        expect(removed, `failed to remove '${alt[0]}'`).to.be.true()
++      }
+     })
+   })
+ }
++
++function alternatives (cidstr) {
++  const cid = new CID(cidstr)
++  if (cid.version === 0) {
++    return [cidstr, cid.toV1().toString()]
++  }
++  return [cidstr]
++}
 -- 
 2.20.1
 
