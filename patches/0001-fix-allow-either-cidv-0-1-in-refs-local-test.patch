@@ -1,26 +1,30 @@
-From b8946ed35c395e4927386882f307bbee340aec87 Mon Sep 17 00:00:00 2001
+From 11a5791d75442d77704b6083c007b9432b68fe42 Mon Sep 17 00:00:00 2001
 From: Joonas Koivunen <joonas.koivunen@gmail.com>
-Date: Wed, 17 Jun 2020 14:19:28 +0300
-Subject: [PATCH 2/4] refs-local tests per
- https://github.com/ipfs/js-ipfs/pull/2989
+Date: Sat, 18 Apr 2020 15:15:41 +0300
+Subject: [PATCH] fix: allow either cidv{0,1} in refs-local test
 
+rationale: simplest way to support using cidv0 and cidv1 interchangeably
+in an ipfs implementation is to just convert all cids to cidv1
+transparently. this has the miniscule setback of `refs/local` not being able
+to list cids in their original version. this fix allows the
+implementation to use either version internally.
 ---
  .../interface-ipfs-core/src/refs-local.js     | 44 ++++++++++++++++---
  1 file changed, 38 insertions(+), 6 deletions(-)
 
 diff --git a/packages/interface-ipfs-core/src/refs-local.js b/packages/interface-ipfs-core/src/refs-local.js
-index 9c41c7bc..59701260 100644
+index d20851de..33a94c74 100644
 --- a/packages/interface-ipfs-core/src/refs-local.js
 +++ b/packages/interface-ipfs-core/src/refs-local.js
-@@ -5,6 +5,7 @@ const { fixtures } = require('./utils')
- const { getDescribe, getIt, expect } = require('./utils/mocha')
- const all = require('it-all')
+@@ -7,6 +7,7 @@ const all = require('it-all')
  const importer = require('ipfs-unixfs-importer')
+ const drain = require('it-drain')
+ const testTimeout = require('./utils/test-timeout')
 +const CID = require('cids')
  
  /** @typedef { import("ipfsd-ctl/src/factory") } Factory */
  /**
-@@ -39,15 +40,46 @@ module.exports = (common, options) => {
+@@ -47,15 +48,46 @@ module.exports = (common, options) => {
  
        const imported = await all(importer(dirs, ipfs.block))
  
