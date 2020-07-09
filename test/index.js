@@ -41,7 +41,14 @@ tests.swarm(factory)
 tests.dag.get(factory, { skip: ['should get only a CID, due to resolving locally only'] })
 tests.dag.put(factory)
 
-tests.block(factory, { skip: ['should error when removing pinned blocks'] })
+tests.block(factory)
+tests.block.put(factory, {
+    skip: [
+      // both are pinning related
+      'should error when removing pinned blocks',
+      'should put a buffer, using options'
+    ]
+})
 
 // these are a bit flaky
 tests.bitswap(factory)
