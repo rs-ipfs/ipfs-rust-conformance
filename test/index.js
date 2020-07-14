@@ -56,14 +56,7 @@ tests.block(factory, {
   ]
 })
 
-// these are a bit flaky
-tests.bitswap(factory, {
-  skip: [
-    // these are broken, block/get is never dropped
-    'should remove blocks from the wantlist when requests are cancelled',
-    'should keep blocks in the wantlist when only one request is cancelled'
-  ]
-})
+tests.bitswap(factory);
 tests.root.refs(factory);
 tests.root.refsLocal(factory);
 
