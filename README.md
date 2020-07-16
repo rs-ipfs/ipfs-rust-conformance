@@ -1,6 +1,6 @@
 # Archival notice
 
-This was merged into rust-ipfs on https://github.com/rs-ipfs/rust-ipfs/pull/246 and lives on there.
+This was merged into [rust-ipfs](https://github.com/rs-ipfs/rust-ipfs) on https://github.com/rs-ipfs/rust-ipfs/pull/246 and lives on there.
 
 # ipfs-rust-conformance
 > Conformance testing for Rust IPFS
